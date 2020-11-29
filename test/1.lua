@@ -1,7 +1,7 @@
 
-print("你好，世界，Lua")
+print("helloworld,Lua")
 
--- 这是我编写的样例函数
+-- this's my func
 function Add(a, b)
   local sum = (a + b) * b
   for i = 1, sum, 1 do
@@ -16,8 +16,8 @@ function Add(a, b)
 end
 
 --[[
-  哈哈
-  这是一个可以换行的注释
+  haha
+  it's long comment
 ]]
 --[[nihao]]
 print(Add(1, 3))

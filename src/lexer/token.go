@@ -2,9 +2,10 @@ package lexer
 
 // Token Lua单词
 type Token struct {
-	text      string
 	tokenType ETokenType
+	text      string
 	line      int
+	column    int
 }
 
 // Text 单词文本
@@ -20,4 +21,9 @@ func (me *Token) TokenType() ETokenType {
 // Line 单词所在代码行号
 func (me *Token) Line() int {
 	return me.line
+}
+
+// Column 单词所在行内的列位置
+func (me *Token) Column() int {
+	return me.column
 }

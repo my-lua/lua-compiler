@@ -43,6 +43,21 @@ func (me *LuaLexer) chunkTopIsWhiteSpace() bool {
 	return false
 }
 
+// chunkTopIsNewLine 检查chunk顶部是否是可产生新行的符号
+func (me *LuaLexer) chunkTopIsNewLine() bool {
+	c := me.chunk[0]
+	switch c {
+	case '\n', '\r':
+		return true
+	}
+	return false
+}
+
+// chunkTopIsPairOfNewLine 检查chunk顶部是否是可产生新行的成对符号
+func (me *LuaLexer) chunkTopIsPairOfNewLine() bool {
+	return me.chunkStartsWith("\n\r") || me.chunkStartsWith("\r\n")
+}
+
 // chunkIsEmpty 检查chunk是否已为空
 func (me *LuaLexer) chunkIsEmpty() bool {
 	return len(me.chunk) < 1

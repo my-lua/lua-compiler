@@ -51,6 +51,7 @@ func (me *LuaLexer) NextToken() Token {
 		}
 	}
 	fmt.Print(string(me.chunk[0]))
+	// fmt.Println(string(me.chunk[0]), me.CurLine(), me.CurColumn())
 	me.chunkNext()
 	return Token{
 		text:      "",

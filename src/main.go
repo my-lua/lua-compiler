@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
+	"regexp"
 
 	"./lexer"
 )
@@ -16,4 +18,8 @@ func main() {
 	lex := lexer.NewLexer(source, fileName)
 	lex.Reset()
 	lex.Run()
+	exp := regexp.MustCompile(`^\d{4}$`)
+	rst := exp.MatchString("1234")
+	fmt.Println()
+	fmt.Println(rst)
 }

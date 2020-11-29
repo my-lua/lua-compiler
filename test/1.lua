@@ -15,9 +15,9 @@ function Add(a, b)
   return sum
 end
 
---[[
+--[==[
   haha
   it's long comment
-]]
+]==]
 --[[nihao]]
 print(Add(1, 3))

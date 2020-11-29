@@ -23,8 +23,8 @@ func (me *LuaLexer) CurLine() int {
 }
 
 // NextToken 解析下一个单词
-func (me *LuaLexer) NextToken() {
-
+func (me *LuaLexer) NextToken() (token string, tokenType ETokenType, line int) {
+	return "", TokenEof, 1
 }
 
 // NewLexer 构造函数

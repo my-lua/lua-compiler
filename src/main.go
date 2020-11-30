@@ -12,9 +12,10 @@ func main() {
 	// }
 	// source := string(buf)
 	lex := lexer.NewLexer(`[==[
-明月几时有，
-把酒问青天
-nihao]==]dongwu`, fileName)
+
+	asddf
+	]==]   asd 搜索dongwu
+	`, fileName)
 	lex.Reset()
 	lex.Run()
 	lex.PrintStatus()

@@ -3,16 +3,20 @@ package lexer
 import "strings"
 
 // chunkNext 下一个字符
-func (me *LuaLexer) chunkNext() {
+func (me *LuaLexer) chunkNext() string {
+	result := me.chunk[:1]
 	me.chunk = me.chunk[1:]
 	me.curColumn++
+	return result
 }
 
 // chunkNext 下n个字符
-func (me *LuaLexer) chunkNextN(n int) {
+func (me *LuaLexer) chunkNextN(n int) string {
+	result := ""
 	for i := 0; i < n; i++ {
-		me.chunkNext()
+		result += me.chunkNext()
 	}
+	return result
 }
 
 // chunkNextSkipN 跳过n个字符

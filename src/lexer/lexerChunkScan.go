@@ -48,7 +48,7 @@ func (me *LuaLexer) scanLongString() string {
 		result = result[1:]
 	}
 	// 跳过分析过后的字符
-	me.chunkNextN(closingBracketEndIndex)
+	me.chunkNextSkipN(closingBracketEndIndex)
 	return result
 }
 

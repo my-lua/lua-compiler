@@ -15,6 +15,11 @@ func (me *LuaLexer) chunkNextN(n int) {
 	}
 }
 
+// chunkNextSkipN 跳过n个字符
+func (me *LuaLexer) chunkNextSkipN(n int) {
+	me.chunk = me.chunk[n:]
+}
+
 // chunkNewLine 新一行
 func (me *LuaLexer) chunkNewLine() {
 	me.curLine++

@@ -4,10 +4,6 @@ package lexer
 type LuaToken struct {
 	tokenType ETokenType
 	text      string
-	line      int
-	column    int
-	start     int
-	end       int
 	lineStart int
 	lineEnd   int
 	charStart int
@@ -52,14 +48,6 @@ func (me *LuaToken) Line() int {
 // Char s
 func (me *LuaToken) Char() int {
 	return me.CharStart()
-}
-
-func (me *LuaToken) SetLineStart(value int) {
-	me.lineStart = value
-}
-
-func (me *LuaToken) SetLineEnd(value int) {
-	me.lineEnd = value
 }
 
 // NewToken 构造函数

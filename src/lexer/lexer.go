@@ -46,8 +46,6 @@ func (me *LuaLexer) NextToken() LuaToken {
 		return LuaToken{
 			text:      "",
 			tokenType: TokenEof,
-			line:      me.CurLine(),
-			column:    me.CurColumn(),
 		}
 	}
 	str := me.chunkNext()
@@ -55,8 +53,6 @@ func (me *LuaLexer) NextToken() LuaToken {
 	return LuaToken{
 		text:      "",
 		tokenType: TokenIdentifier,
-		line:      me.CurLine(),
-		column:    me.CurColumn(),
 	}
 }
 

@@ -71,14 +71,30 @@ func (me *LuaLexer) Reset() {
 // Run 运行状态机
 func (me *LuaLexer) Run() []Token {
 	result := make([]Token, 0)
-	for {
-		token := me.NextToken()
-		result = append(result, token)
-		if token.TokenType() == TokenEof {
-			break
-		}
-	}
+
+	str := me.scanLongString()
+	fmt.Println(str)
+
+	// for {
+	// 	token := me.NextToken()
+	// 	result = append(result, token)
+	// 	if token.TokenType() == TokenEof {
+	// 		break
+	// 	}
+	// }
 	return result
+}
+
+// PrintStatus s
+func (me *LuaLexer) PrintStatus() {
+	fmt.Printf("file: %s\n", me.SourceName())
+	fmt.Printf("line: %d\n", me.CurLine())
+	fmt.Printf("column: %d\n", me.CurColumn())
+	if len(me.chunk) < 10 {
+		fmt.Printf("chunk: %s...\n", me.chunk[:len(me.chunk)])
+	} else {
+		fmt.Printf("chunk: %s...\n", me.chunk[:10])
+	}
 }
 
 // NewLexer 构造函数

@@ -41,6 +41,8 @@ func (me *LuaLexer) scanLongString() string {
 	result := me.chunk[:closingBracketStartIndex]
 	// 从代码文本中采集的换行符统一替换为\n
 	result = me.ReNewLine().ReplaceAllString(result, "\n")
+	// 统计长字符串中换行符个数，计入状态
+	me.chunkNewLineN(strings.Count(result, "\n"))
 	// 如果行首为换行符，则删除
 	if strings.HasPrefix(result, "\n") {
 		result = result[1:]

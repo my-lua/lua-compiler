@@ -39,23 +39,6 @@ func isWhiteSpace(c byte) bool {
 	return false
 }
 
-// NextToken 解析下一个单词
-func (me *LuaLexer) NextToken() LuaToken {
-	me.skipInvalidCodes()
-	if me.chunkIsEmpty() {
-		return LuaToken{
-			text:      "",
-			tokenType: TokenEof,
-		}
-	}
-	str := me.chunkNext()
-	fmt.Print(str)
-	return LuaToken{
-		text:      "",
-		tokenType: TokenIdentifier,
-	}
-}
-
 // Reset 重置状态机
 func (me *LuaLexer) Reset() {
 	me.chunk = me.source

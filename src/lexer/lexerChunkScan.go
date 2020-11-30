@@ -2,7 +2,6 @@ package lexer
 
 import (
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -12,6 +11,29 @@ func (me *LuaLexer) scan(re *regexp.Regexp) string {
 
 func (me *LuaLexer) scanShortString() string {
 	return ""
+}
+
+// collectLongString 采集长字符串
+func (me *LuaLexer) collectLongString(n int) string {
+	result := ""
+	for i := 0; i < n; i++ {
+		if me.chunkTopIsPairOfNewLine() {
+			me.chunkNextN(2)
+			me.chunkNewLine()
+			result += "\n"
+		} else if me.chunkTopIsNewLine() {
+			me.chunkNext()
+			me.chunkNewLine()
+			result += "\n"
+		} else {
+			result += me.chunkNext()
+		}
+	}
+	// 如果行首为换行符，则删除
+	if strings.HasPrefix(result, "\n") {
+		result = result[1:]
+	}
+	return result
 }
 
 // scanLongString 扫描长字符串
@@ -25,38 +47,17 @@ func (me *LuaLexer) scanLongString() string {
 	openingBracketLen, equalSignNum := len(matchs[0]), len(matchs[1])
 	// 跳过头部括号
 	me.chunkNextN(openingBracketLen)
-	// 构建尾部括号正则表达式
-	longStringClosingBracket := `\]={` +
-		strconv.FormatInt(int64(equalSignNum), 10) +
-		`}\]`
-	reLongStringClosingBracket := regexp.MustCompile(longStringClosingBracket)
-	// 向后寻找正确的尾部括号
-	indexs := reLongStringClosingBracket.FindStringIndex(me.chunk)
+	// 向后寻找相匹配的尾部括号
+	indexs := me.ReLongStringClosingBracket(equalSignNum).FindStringIndex(me.chunk)
 	if len(indexs) < 2 {
 		panic("lexer scanLongString: 长字符串没有正确的尾部括号")
 	}
-	// 获取尾部括号开始，结束位置
+	// 获取尾部括号开始位置
 	closingBracketStartIndex := indexs[0]
-	// 获取并处理字符串
-	result := ""
-	for i := 0; i < closingBracketStartIndex; i++ {
-		if me.chunkTopIsPairOfNewLine() {
-			me.chunkNextN(2)
-			me.chunkNewLine()
-			result += "\n"
-		} else if me.chunkTopIsNewLine() {
-			me.chunkNext()
-			me.chunkNewLine()
-			result += "\n"
-		} else {
-			result += me.chunkNext()
-		}
-	}
+	// 收集并处理长字符串
+	result := me.collectLongString(closingBracketStartIndex)
+	// 跳过尾部括号
 	me.chunkNextN(openingBracketLen)
-	// 如果行首为换行符，则删除
-	if strings.HasPrefix(result, "\n") {
-		result = result[1:]
-	}
 	return result
 }
 

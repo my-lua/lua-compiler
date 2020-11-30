@@ -12,9 +12,7 @@ func main() {
 	// }
 	// source := string(buf)
 	lex := lexer.NewLexer(`[==[
-
-	asddf
-	]==]   asd 搜索dongwu
+asddf]==]   asd 搜索dongwu
 	`, fileName)
 	lex.Reset()
 	lex.Run()

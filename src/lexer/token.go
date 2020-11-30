@@ -6,11 +6,12 @@ type LuaToken struct {
 	text      string
 	line      int
 	column    int
-}
-
-// Text 单词文本
-func (me *LuaToken) Text() string {
-	return me.text
+	start     int
+	end       int
+	lineStart int
+	lineEnd   int
+	charStart int
+	charEnd   int
 }
 
 // TokenType 单词类型
@@ -18,26 +19,56 @@ func (me *LuaToken) TokenType() ETokenType {
 	return me.tokenType
 }
 
-// Line 单词所在代码行号
-func (me *LuaToken) Line() int {
-	return me.line
+// Text 单词文本
+func (me *LuaToken) Text() string {
+	return me.text
 }
 
-// Column 单词所在行内的列位置
-func (me *LuaToken) Column() int {
-	return me.column
+// LineStart s
+func (me *LuaToken) LineStart() int {
+	return me.lineStart
+}
+
+// LineEnd s
+func (me *LuaToken) LineEnd() int {
+	return me.lineEnd
+}
+
+// CharStart s
+func (me *LuaToken) CharStart() int {
+	return me.charStart
+}
+
+// CharEnd s
+func (me *LuaToken) CharEnd() int {
+	return me.charEnd
+}
+
+// Line s
+func (me *LuaToken) Line() int {
+	return me.LineStart()
+}
+
+// Char s
+func (me *LuaToken) Char() int {
+	return me.CharStart()
+}
+
+func (me *LuaToken) SetLineStart(value int) {
+	me.lineStart = value
+}
+
+func (me *LuaToken) SetLineEnd(value int) {
+	me.lineEnd = value
 }
 
 // NewToken 构造函数
 func NewToken(
 	tokenType ETokenType,
 	text string,
-	line, column int,
 ) *LuaToken {
 	return &LuaToken{
 		tokenType: tokenType,
 		text:      text,
-		line:      line,
-		column:    column,
 	}
 }

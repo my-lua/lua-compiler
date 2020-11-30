@@ -12,31 +12,80 @@ func (me *LuaLexer) NextToken() *LuaToken {
 	}
 
 	topChar := me.chunkTopChar()
+	topStr := string(topChar)
 	switch topChar {
 	case ';':
 		me.chunkNext()
-		return NewToken(TokenSepSemi, string(topChar))
+		return NewToken(TokenSepSemi, topStr)
 	case ',':
 		me.chunkNext()
-		return NewToken(TokenSepComma, string(topChar))
+		return NewToken(TokenSepComma, topStr)
 	case '(':
 		me.chunkNext()
-		return NewToken(TokenSepLParen, string(topChar))
+		return NewToken(TokenSepLParen, topStr)
 	case ')':
 		me.chunkNext()
-		return NewToken(TokenSepRParen, string(topChar))
+		return NewToken(TokenSepRParen, topStr)
 	case '[':
 		me.chunkNext()
-		return NewToken(TokenSepLBrack, string(topChar))
+		return NewToken(TokenSepLBrack, topStr)
 	case ']':
 		me.chunkNext()
-		return NewToken(TokenSepRBrack, string(topChar))
+		return NewToken(TokenSepRBrack, topStr)
 	case '{':
 		me.chunkNext()
-		return NewToken(TokenSepLCurly, string(topChar))
+		return NewToken(TokenSepLCurly, topStr)
 	case '}':
 		me.chunkNext()
-		return NewToken(TokenSepRCurly, string(topChar))
+		return NewToken(TokenSepRCurly, topStr)
+	case '+':
+		me.chunkNext()
+		return NewToken(TokenOpAdd, topStr)
+	case '-':
+		me.chunkNext()
+		return NewToken(TokenOpSub, topStr)
+	case '*':
+		me.chunkNext()
+		return NewToken(TokenOpMul, topStr)
+	case '/':
+		me.chunkNext()
+		return NewToken(TokenOpDiv, topStr)
+	case '%':
+		me.chunkNext()
+		return NewToken(TokenOpMod, topStr)
+	case '^':
+		me.chunkNext()
+		return NewToken(TokenOpPow, topStr)
+	case '&':
+		me.chunkNext()
+		return NewToken(TokenOpBAnd, topStr)
+	case '|':
+		me.chunkNext()
+		return NewToken(TokenOpBOr, topStr)
+	case '#':
+		me.chunkNext()
+		return NewToken(TokenOpLen, topStr)
+	case ':':
+		if me.chunkStartsWith("::") {
+			me.chunkNextN(2)
+			return NewToken(TokenSepLabel, "::")
+		}
+		me.chunkNext()
+		return NewToken(TokenSepColon, topStr)
+	case '~':
+		if me.chunkStartsWith("~=") {
+			me.chunkNextN(2)
+			return NewToken(TokenOpNe, "~=")
+		}
+		me.chunkNext()
+		return NewToken(TokenOpWave, topStr)
+	case '=':
+		if me.chunkStartsWith("==") {
+			me.chunkNextN(2)
+			return NewToken(TokenOpEq, "==")
+		}
+		me.chunkNext()
+		return NewToken(TokenOpAssign, topStr)
 	}
 
 	str := me.chunkNext()

@@ -67,6 +67,11 @@ func (me *LuaLexer) chunkTopIsPairOfNewLine() bool {
 	return me.chunkStartsWith("\n\r") || me.chunkStartsWith("\r\n")
 }
 
+// chunkTopIsComment 检查chunk顶部是否是注释
+func (me *LuaLexer) chunkTopIsComment() bool {
+	return me.chunkStartsWith("--")
+}
+
 // chunkIsEmpty 检查chunk是否已为空
 func (me *LuaLexer) chunkIsEmpty() bool {
 	return len(me.chunk) < 1

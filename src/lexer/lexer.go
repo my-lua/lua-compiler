@@ -40,20 +40,19 @@ func isWhiteSpace(c byte) bool {
 }
 
 // NextToken 解析下一个单词
-func (me *LuaLexer) NextToken() Token {
+func (me *LuaLexer) NextToken() LuaToken {
 	me.skipInvalidCodes()
 	if me.chunkIsEmpty() {
-		return Token{
+		return LuaToken{
 			text:      "",
 			tokenType: TokenEof,
 			line:      me.CurLine(),
 			column:    me.CurColumn(),
 		}
 	}
-	fmt.Print(string(me.chunk[0]))
-	// fmt.Println(string(me.chunk[0]), me.CurLine(), me.CurColumn())
-	me.chunkNext()
-	return Token{
+	str := me.chunkNext()
+	fmt.Print(str)
+	return LuaToken{
 		text:      "",
 		tokenType: TokenIdentifier,
 		line:      me.CurLine(),
@@ -69,19 +68,15 @@ func (me *LuaLexer) Reset() {
 }
 
 // Run 运行状态机
-func (me *LuaLexer) Run() []Token {
-	result := make([]Token, 0)
-
-	str := me.scanLongString()
-	fmt.Println(str)
-
-	// for {
-	// 	token := me.NextToken()
-	// 	result = append(result, token)
-	// 	if token.TokenType() == TokenEof {
-	// 		break
-	// 	}
-	// }
+func (me *LuaLexer) Run() []LuaToken {
+	result := make([]LuaToken, 0)
+	for {
+		token := me.NextToken()
+		result = append(result, token)
+		if token.TokenType() == TokenEof {
+			break
+		}
+	}
 	return result
 }
 

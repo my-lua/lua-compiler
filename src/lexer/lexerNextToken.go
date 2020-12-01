@@ -83,6 +83,36 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		}
 		me.chunkNext()
 		return NewLuaToken(TokenOpAssign, topChar)
+	case "<":
+		if me.chunkStartsWith("<<") {
+			me.chunkNextN(2)
+			return NewLuaToken(TokenOpShl, "<<")
+		} else if me.chunkStartsWith("<=") {
+			me.chunkNextN(2)
+			return NewLuaToken(TokenOpLe, "<=")
+		}
+		me.chunkNext()
+		return NewLuaToken(TokenOpLt, topChar)
+	case ">":
+		if me.chunkStartsWith(">>") {
+			me.chunkNextN(2)
+			return NewLuaToken(TokenOpShr, ">>")
+		} else if me.chunkStartsWith(">=") {
+			me.chunkNextN(2)
+			return NewLuaToken(TokenOpGe, ">=")
+		}
+		me.chunkNext()
+		return NewLuaToken(TokenOpGt, topChar)
+	case ".":
+		if me.chunkStartsWith("...") {
+			me.chunkNextN(3)
+			return NewLuaToken(TokenVararg, "...")
+		} else if me.chunkStartsWith("..") {
+			me.chunkNextN(2)
+			return NewLuaToken(TokenOpConcat, "..")
+		}
+		me.chunkNext()
+		return NewLuaToken(TokenSepDot, topChar)
 	}
 	// 其他
 	str := me.chunkNext()

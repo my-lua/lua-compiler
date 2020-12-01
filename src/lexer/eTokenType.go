@@ -69,72 +69,120 @@ const (
 	TokenOpBXor     = TokenOpWave
 )
 
-// Name 获取枚举名称
-func (me ETokenType) Name() string {
-	return getLuaTokenTypeNameTable()[int(me)]
+var _tokenTypeNameTable = []string{
+	"TokenEof",
+	"TokenVararg",
+	"TokenSepSemi",
+	"TokenSepComma",
+	"TokenSepDot",
+	"TokenSepColon",
+	"TokenSepLabel",
+	"TokenSepLParen",
+	"TokenSepRParen",
+	"TokenSepLBrack",
+	"TokenSepRBrack",
+	"TokenSepLCurly",
+	"TokenSepRCurly",
+	"TokenOpAssign",
+	"TokenOpMinus",
+	"TokenOpWave",
+	"TokenOpAdd",
+	"TokenOpMul",
+	"TokenOpDiv",
+	"TokenOpIDiv",
+	"TokenOpPow",
+	"TokenOpMod",
+	"TokenOpBAnd",
+	"TokenOpBOr",
+	"TokenOpShr",
+	"TokenOpShl",
+	"TokenOpConcat",
+	"TokenOpLt",
+	"TokenOpLe",
+	"TokenOpGt",
+	"TokenOpGe",
+	"TokenOpEq",
+	"TokenOpNe",
+	"TokenOpLen",
+	"TokenOpAnd",
+	"TokenOpOr",
+	"TokenOpNot",
+	"TokenKwBreak",
+	"TokenKwDo",
+	"TokenKwElse",
+	"TokenKwElseIf",
+	"TokenKwEnd",
+	"TokenKwFalse",
+	"TokenKwFor",
+	"TokenKwFunction",
+	"TokenKwGoto",
+	"TokenKwIf",
+	"TokenKwIn",
+	"TokenKwLocal",
+	"TokenKwNil",
+	"TokenKwRepeat",
+	"TokenKwReturn",
+	"TokenKwThen",
+	"TokenKwTrue",
+	"TokenKwUntil",
+	"TokenKwWhile",
+	"TokenIdentifier",
+	"TokenNumber",
+	"TokenString",
 }
 
 // getLuaTokenTypeNameTable s
 func getLuaTokenTypeNameTable() []string {
-	return []string{
-		"TokenEof",
-		"TokenVararg",
-		"TokenSepSemi",
-		"TokenSepComma",
-		"TokenSepDot",
-		"TokenSepColon",
-		"TokenSepLabel",
-		"TokenSepLParen",
-		"TokenSepRParen",
-		"TokenSepLBrack",
-		"TokenSepRBrack",
-		"TokenSepLCurly",
-		"TokenSepRCurly",
-		"TokenOpAssign",
-		"TokenOpMinus",
-		"TokenOpWave",
-		"TokenOpAdd",
-		"TokenOpMul",
-		"TokenOpDiv",
-		"TokenOpIDiv",
-		"TokenOpPow",
-		"TokenOpMod",
-		"TokenOpBAnd",
-		"TokenOpBOr",
-		"TokenOpShr",
-		"TokenOpShl",
-		"TokenOpConcat",
-		"TokenOpLt",
-		"TokenOpLe",
-		"TokenOpGt",
-		"TokenOpGe",
-		"TokenOpEq",
-		"TokenOpNe",
-		"TokenOpLen",
-		"TokenOpAnd",
-		"TokenOpOr",
-		"TokenOpNot",
-		"TokenKwBreak",
-		"TokenKwDo",
-		"TokenKwElse",
-		"TokenKwElseIf",
-		"TokenKwEnd",
-		"TokenKwFalse",
-		"TokenKwFor",
-		"TokenKwFunction",
-		"TokenKwGoto",
-		"TokenKwIf",
-		"TokenKwIn",
-		"TokenKwLocal",
-		"TokenKwNil",
-		"TokenKwRepeat",
-		"TokenKwReturn",
-		"TokenKwThen",
-		"TokenKwTrue",
-		"TokenKwUntil",
-		"TokenKwWhile",
-		"TokenIdentifier",
-		"TokenNumber",
-		"TokenString",
+	return _tokenTypeNameTable
+}
+
+// Name 获取名称
+func (me ETokenType) Name() string {
+	return getLuaTokenTypeNameTable()[int(me)]
+}
+
+var _keywordMap = map[string]ETokenType{
+	"and":      TokenOpAnd,
+	"break":    TokenKwBreak,
+	"do":       TokenKwDo,
+	"else":     TokenKwElse,
+	"elseif":   TokenKwElseIf,
+	"end":      TokenKwEnd,
+	"false":    TokenKwFalse,
+	"for":      TokenKwFor,
+	"function": TokenKwFunction,
+	"goto":     TokenKwGoto,
+	"if":       TokenKwIf,
+	"in":       TokenKwIn,
+	"local":    TokenKwLocal,
+	"nil":      TokenKwNil,
+	"not":      TokenOpNot,
+	"or":       TokenOpOr,
+	"repeat":   TokenKwRepeat,
+	"return":   TokenKwReturn,
+	"then":     TokenKwThen,
+	"true":     TokenKwTrue,
+	"until":    TokenKwUntil,
+	"while":    TokenKwWhile,
+}
+
+// getLuaKeywordMap s
+func getLuaKeywordMap() map[string]ETokenType {
+	return _keywordMap
+}
+
+// IsLuaKeyword 判断一个字符串是不是Lua关键字
+func IsLuaKeyword(text string) bool {
+	if _, found := getLuaKeywordMap()[text]; found {
+		return true
 	}
+	return false
+}
+
+// NewLuaKeyword 根据字符串创建Lua关键字
+func NewLuaKeyword(text string) ETokenType {
+	if IsLuaKeyword(text) {
+		return getLuaKeywordMap()[text]
+	}
+	panic("ETokenType NewLuaKeyword: 不是有效的Lua关键字")
 }

@@ -1,5 +1,7 @@
 package lexer
 
+import "fmt"
+
 // LuaToken Lua单词
 type LuaToken struct {
 	tokenType ETokenType
@@ -50,8 +52,13 @@ func (me *LuaToken) Char() int {
 	return me.CharStart()
 }
 
-// NewToken 构造函数
-func NewToken(
+// Print 打印Token信息
+func (me *LuaToken) Print() {
+	fmt.Printf("%s\t%s\n", me.Text(), me.TokenType().Name())
+}
+
+// NewLuaToken 构造函数
+func NewLuaToken(
 	tokenType ETokenType,
 	text string,
 ) *LuaToken {

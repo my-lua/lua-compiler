@@ -77,7 +77,7 @@ func (me *LuaLexer) chunkIsEmpty() bool {
 	return len(me.chunk) < 1
 }
 
-// chunkTopChar chunk顶部的字符
-func (me *LuaLexer) chunkTopChar() byte {
-	return me.chunk[0]
+// chunkTopChar chunk顶部的字符（字符串表示）
+func (me *LuaLexer) chunkTopCharStr() string {
+	return string(me.chunk[0])
 }

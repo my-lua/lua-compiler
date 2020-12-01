@@ -47,10 +47,11 @@ func (me *LuaLexer) Reset() {
 }
 
 // Run 运行状态机
-func (me *LuaLexer) Run() []LuaToken {
-	result := make([]LuaToken, 0)
+func (me *LuaLexer) Run() []*LuaToken {
+	result := make([]*LuaToken, 0)
 	for {
 		token := me.NextToken()
+		token.Print()
 		result = append(result, token)
 		if token.TokenType() == TokenEof {
 			break

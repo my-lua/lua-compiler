@@ -1,94 +1,90 @@
 package lexer
 
-import "fmt"
-
 // NextToken 解析下一个单词
 func (me *LuaLexer) NextToken() *LuaToken {
 	// 跳过无效代码
 	me.skipInvalidCodes()
 	// 如果已经没有要解析的代码，则返回EOF
 	if me.chunkIsEmpty() {
-		return NewToken(TokenEof, "")
+		return NewLuaToken(TokenEof, "")
 	}
-
-	topChar := me.chunkTopChar()
-	topStr := string(topChar)
+	// 获取顶部字符
+	topChar := me.chunkTopCharStr()
 	switch topChar {
-	case ';':
+	case ";":
 		me.chunkNext()
-		return NewToken(TokenSepSemi, topStr)
-	case ',':
+		return NewLuaToken(TokenSepSemi, topChar)
+	case ",":
 		me.chunkNext()
-		return NewToken(TokenSepComma, topStr)
-	case '(':
+		return NewLuaToken(TokenSepComma, topChar)
+	case "(":
 		me.chunkNext()
-		return NewToken(TokenSepLParen, topStr)
-	case ')':
+		return NewLuaToken(TokenSepLParen, topChar)
+	case ")":
 		me.chunkNext()
-		return NewToken(TokenSepRParen, topStr)
-	case '[':
+		return NewLuaToken(TokenSepRParen, topChar)
+	case "[":
 		me.chunkNext()
-		return NewToken(TokenSepLBrack, topStr)
-	case ']':
+		return NewLuaToken(TokenSepLBrack, topChar)
+	case "]":
 		me.chunkNext()
-		return NewToken(TokenSepRBrack, topStr)
-	case '{':
+		return NewLuaToken(TokenSepRBrack, topChar)
+	case "{":
 		me.chunkNext()
-		return NewToken(TokenSepLCurly, topStr)
-	case '}':
+		return NewLuaToken(TokenSepLCurly, topChar)
+	case "}":
 		me.chunkNext()
-		return NewToken(TokenSepRCurly, topStr)
-	case '+':
+		return NewLuaToken(TokenSepRCurly, topChar)
+	case "+":
 		me.chunkNext()
-		return NewToken(TokenOpAdd, topStr)
-	case '-':
+		return NewLuaToken(TokenOpAdd, topChar)
+	case "-":
 		me.chunkNext()
-		return NewToken(TokenOpSub, topStr)
-	case '*':
+		return NewLuaToken(TokenOpSub, topChar)
+	case "*":
 		me.chunkNext()
-		return NewToken(TokenOpMul, topStr)
-	case '/':
+		return NewLuaToken(TokenOpMul, topChar)
+	case "/":
 		me.chunkNext()
-		return NewToken(TokenOpDiv, topStr)
-	case '%':
+		return NewLuaToken(TokenOpDiv, topChar)
+	case "%":
 		me.chunkNext()
-		return NewToken(TokenOpMod, topStr)
-	case '^':
+		return NewLuaToken(TokenOpMod, topChar)
+	case "^":
 		me.chunkNext()
-		return NewToken(TokenOpPow, topStr)
-	case '&':
+		return NewLuaToken(TokenOpPow, topChar)
+	case "&":
 		me.chunkNext()
-		return NewToken(TokenOpBAnd, topStr)
-	case '|':
+		return NewLuaToken(TokenOpBAnd, topChar)
+	case "|":
 		me.chunkNext()
-		return NewToken(TokenOpBOr, topStr)
-	case '#':
+		return NewLuaToken(TokenOpBOr, topChar)
+	case "#":
 		me.chunkNext()
-		return NewToken(TokenOpLen, topStr)
-	case ':':
+		return NewLuaToken(TokenOpLen, topChar)
+	case ":":
 		if me.chunkStartsWith("::") {
 			me.chunkNextN(2)
-			return NewToken(TokenSepLabel, "::")
+			return NewLuaToken(TokenSepLabel, "::")
 		}
 		me.chunkNext()
-		return NewToken(TokenSepColon, topStr)
-	case '~':
+		return NewLuaToken(TokenSepColon, topChar)
+	case "~":
 		if me.chunkStartsWith("~=") {
 			me.chunkNextN(2)
-			return NewToken(TokenOpNe, "~=")
+			return NewLuaToken(TokenOpNe, "~=")
 		}
 		me.chunkNext()
-		return NewToken(TokenOpWave, topStr)
-	case '=':
+		return NewLuaToken(TokenOpWave, topChar)
+	case "=":
 		if me.chunkStartsWith("==") {
 			me.chunkNextN(2)
-			return NewToken(TokenOpEq, "==")
+			return NewLuaToken(TokenOpEq, "==")
 		}
 		me.chunkNext()
-		return NewToken(TokenOpAssign, topStr)
+		return NewLuaToken(TokenOpAssign, topChar)
 	}
-
+	// 其他
 	str := me.chunkNext()
-	fmt.Print(str)
-	return NewToken(TokenIdentifier, "")
+	return NewLuaToken(TokenIdentifier, str)
 }

@@ -71,7 +71,12 @@ const (
 
 // Name 获取枚举名称
 func (me ETokenType) Name() string {
-	table := []string{
+	return getLuaTokenTypeNameTable()[int(me)]
+}
+
+// getLuaTokenTypeNameTable s
+func getLuaTokenTypeNameTable() []string {
+	return []string{
 		"TokenEof",
 		"TokenVararg",
 		"TokenSepSemi",
@@ -132,5 +137,4 @@ func (me ETokenType) Name() string {
 		"TokenNumber",
 		"TokenString",
 	}
-	return table[int(me)]
 }

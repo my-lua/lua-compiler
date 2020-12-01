@@ -123,8 +123,7 @@ func (me *LuaLexer) NextToken() *LuaToken {
 	if me.chunkTopLikeIdentifier() {
 		identifier := me.scanIdentifier()
 		if IsLuaKeyword(identifier) {
-			// 这里有问题，关键字已经整合进入TokenType了
-			// return NewLuaToken(Token)
+			return NewLuaToken(NewLuaKeyword(identifier), identifier)
 		}
 		return NewLuaToken(TokenIdentifier, identifier)
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	"./lexer"
@@ -18,4 +19,7 @@ func main() {
 	lex.Run()
 	// lex.PrintStatus()
 	// lex.Run()
+
+	smap := map[string]int{}
+	fmt.Println(smap["xxss"])
 }

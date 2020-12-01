@@ -115,6 +115,20 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		return NewLuaToken(TokenSepDot, topChar)
 	}
 	// 其他
+
+	if me.chunkTopLikeNumber() {
+		return NewLuaToken(TokenNumber, me.scanNumber())
+	}
+
+	if me.chunkTopLikeIdentifier() {
+		identifier := me.scanIdentifier()
+		if IsLuaKeyword(identifier) {
+			// 这里有问题，关键字已经整合进入TokenType了
+			// return NewLuaToken(Token)
+		}
+		return NewLuaToken(TokenIdentifier, identifier)
+	}
+
 	str := me.chunkNext()
 	return NewLuaToken(TokenIdentifier, str)
 }

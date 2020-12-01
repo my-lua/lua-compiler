@@ -81,3 +81,13 @@ func (me *LuaLexer) chunkIsEmpty() bool {
 func (me *LuaLexer) chunkTopCharStr() string {
 	return string(me.chunk[0])
 }
+
+// chunkTopLikeIdentifier chunk顶部是否像一个标识符
+func (me *LuaLexer) chunkTopLikeIdentifier() bool {
+	return me.ReIdentifierStart().MatchString(me.chunk)
+}
+
+// chunkTopLikeNumber chunk顶部是否像一个数字
+func (me *LuaLexer) chunkTopLikeNumber() bool {
+	return me.ReNumberStart().MatchString(me.chunk)
+}

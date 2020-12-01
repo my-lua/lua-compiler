@@ -5,8 +5,13 @@ import (
 	"strings"
 )
 
+// scan 扫描的基础方法
 func (me *LuaLexer) scan(re *regexp.Regexp) string {
-	return ""
+	if result := re.FindString(me.chunk); result != "" {
+		me.chunkNextN(len(result))
+		return result
+	}
+	panic("lexer scan: 没有扫描到匹配的字符串")
 }
 
 func (me *LuaLexer) scanShortString() string {
@@ -62,9 +67,9 @@ func (me *LuaLexer) scanLongString() string {
 }
 
 func (me *LuaLexer) scanNumber() string {
-	return ""
+	return me.scan(me.ReNumber())
 }
 
 func (me *LuaLexer) scanIdentifier() string {
-	return ""
+	return me.scan(me.ReIdentifier())
 }

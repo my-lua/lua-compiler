@@ -52,6 +52,11 @@ func (me *LuaToken) Char() int {
 	return me.CharStart()
 }
 
+// Keyword 获取Token内的Lua关键字
+func (me *LuaToken) Keyword() ELuaKeyword {
+	return NewLuaKeyword(me.Text())
+}
+
 // Print 打印Token信息
 func (me *LuaToken) Print() {
 	fmt.Printf("%s\t%s\n", me.Text(), me.TokenType().Name())

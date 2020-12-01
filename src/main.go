@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"regexp"
 
 	"./lexer"
 )
@@ -22,4 +23,6 @@ func main() {
 
 	smap := map[string]int{}
 	fmt.Println(smap["xxss"])
+	re := regexp.MustCompile(`^[_a-zA-Z][_a-zA-Z\d]*`)
+	fmt.Println(re.MatchString("_ass我K1293abc"))
 }

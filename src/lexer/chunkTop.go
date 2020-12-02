@@ -12,7 +12,7 @@ func (me ChunkTop) startsWith(text string) bool {
 	return strings.HasPrefix(string(me), text)
 }
 
-func (me ChunkTop) like(re regexp.Regexp) bool {
+func (me ChunkTop) like(re *regexp.Regexp) bool {
 	return re.MatchString(string(me))
 }
 
@@ -46,25 +46,25 @@ func (me ChunkTop) IsPairOfNewLine() bool {
 
 // LikeNumber 像是数字
 func (me ChunkTop) LikeNumber() bool {
-	return false
+	return me.like(ReNumberStart())
 }
 
 // LikeShortString 像是短字符串
 func (me ChunkTop) LikeShortString() bool {
-	return false
+	return me.startsWith("'") || me.startsWith("\"")
 }
 
 // LikeLongString 像是长字符串
 func (me ChunkTop) LikeLongString() bool {
-	return false
+	return me.like(ReLongStringBracketStart())
 }
 
 // LikeComment 像是注释
 func (me ChunkTop) LikeComment() bool {
-	return false
+	return me.startsWith("--")
 }
 
 // LikeIdentifier 像是标识符
 func (me ChunkTop) LikeIdentifier() bool {
-	return false
+	return me.like(ReIdentifierStart())
 }

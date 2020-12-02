@@ -15,12 +15,12 @@ func (me *LuaLexer) ReNewLine() *regexp.Regexp {
 var _reLongStringBracketStart = regexp.MustCompile(`^\[(=*)\[`)
 
 // ReLongStringBracketStart s
-func (me *LuaLexer) ReLongStringBracketStart() *regexp.Regexp {
+func ReLongStringBracketStart() *regexp.Regexp {
 	return _reLongStringBracketStart
 }
 
 // ReLongStringBracketEnd s
-func (me *LuaLexer) ReLongStringBracketEnd(n int) *regexp.Regexp {
+func ReLongStringBracketEnd(n int) *regexp.Regexp {
 	// 构建尾部括号正则表达式
 	longStringBracketEnd := `\]={` +
 		strconv.FormatInt(int64(n), 10) +
@@ -31,21 +31,21 @@ func (me *LuaLexer) ReLongStringBracketEnd(n int) *regexp.Regexp {
 var _reIdentifierStart = regexp.MustCompile(`^[_a-zA-Z]`)
 
 // ReIdentifierStart s
-func (me *LuaLexer) ReIdentifierStart() *regexp.Regexp {
+func ReIdentifierStart() *regexp.Regexp {
 	return _reIdentifierStart
 }
 
 var _reNumberStart = regexp.MustCompile(`^[.\d]`)
 
 // ReNumberStart s
-func (me *LuaLexer) ReNumberStart() *regexp.Regexp {
+func ReNumberStart() *regexp.Regexp {
 	return _reNumberStart
 }
 
 var _reNumber = regexp.MustCompile(`^[.\d]\d*`)
 
 // ReNumber s
-func (me *LuaLexer) ReNumber() *regexp.Regexp {
+func ReNumber() *regexp.Regexp {
 	return _reNumber
 }
 

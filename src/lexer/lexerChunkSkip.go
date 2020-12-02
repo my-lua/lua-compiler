@@ -5,7 +5,7 @@ func (me *LuaLexer) skipComment() {
 	// 跳过注释头（--）
 	me.chunkNextN(2)
 	// 如果是长注释
-	if me.ReLongStringOpeningBracket().FindString(me.chunk) != "" {
+	if me.ReLongStringBracketStart().FindString(me.chunk) != "" {
 		me.scanLongString()
 	} else {
 		for !me.chunkIsEmpty() && !me.chunkTopIsNewLine() {

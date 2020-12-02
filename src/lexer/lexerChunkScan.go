@@ -44,7 +44,7 @@ func (me *LuaLexer) collectLongString(n int) string {
 // scanLongString 扫描长字符串
 func (me *LuaLexer) scanLongString() string {
 	// 检查长字符串头部括号
-	matchs := me.ReLongStringOpeningBracket().FindStringSubmatch(me.chunk)
+	matchs := me.ReLongStringBracketStart().FindStringSubmatch(me.chunk)
 	if len(matchs) < 2 {
 		panic("lexer scanLongString: 长字符串头部括号不匹配")
 	}
@@ -53,7 +53,7 @@ func (me *LuaLexer) scanLongString() string {
 	// 跳过头部括号
 	me.chunkNextN(openingBracketLen)
 	// 向后寻找相匹配的尾部括号
-	indexs := me.ReLongStringClosingBracket(equalSignNum).FindStringIndex(me.chunk)
+	indexs := me.ReLongStringBracketEnd(equalSignNum).FindStringIndex(me.chunk)
 	if len(indexs) < 2 {
 		panic("lexer scanLongString: 长字符串没有正确的尾部括号")
 	}

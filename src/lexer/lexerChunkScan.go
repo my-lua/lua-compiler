@@ -14,8 +14,11 @@ func (me *LuaLexer) scan(re *regexp.Regexp) string {
 	panic("lexer scan: 没有扫描到匹配的字符串")
 }
 
+// 扫描短字符串
 func (me *LuaLexer) scanShortString() string {
-	return ""
+	shortStr := me.scan(me.ReShortStr())
+	// 去除两边引号
+	return shortStr[1 : len(shortStr)-1]
 }
 
 // collectLongString 采集长字符串

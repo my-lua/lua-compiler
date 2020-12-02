@@ -24,6 +24,9 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		me.chunkNext()
 		return NewLuaToken(TokenSepRParen, topChar)
 	case "[":
+		if me.chunkTopLikeLongString() {
+			return NewLuaToken(TokenString, me.scanLongString())
+		}
 		me.chunkNext()
 		return NewLuaToken(TokenSepLBrack, topChar)
 	case "]":
@@ -113,6 +116,8 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		}
 		me.chunkNext()
 		return NewLuaToken(TokenSepDot, topChar)
+	case "'", "\"":
+		return NewLuaToken(TokenString, me.scanShortString())
 	}
 	// 其他
 

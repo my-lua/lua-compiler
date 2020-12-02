@@ -25,5 +25,4 @@ print(Add(1, 3))
 --[==[
   ss
 ]==]print([==[
-  xiaonianlang
-]==])
+你好]==])

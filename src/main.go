@@ -18,11 +18,8 @@ func main() {
 	lex := lexer.NewLexer(source, fileName)
 	lex.Reset()
 	lex.Run()
-	// lex.PrintStatus()
-	// lex.Run()
 
-	smap := map[string]int{}
-	fmt.Println(smap["xxss"])
-	re := regexp.MustCompile(`^[_a-zA-Z][_a-zA-Z\d]*`)
-	fmt.Println(re.MatchString("_ass我K1293abc"))
+	re := regexp.MustCompile(`^('.*?')|(".*?")`)
+	str := `"123"4" +  "sdf"`
+	fmt.Println(re.MatchString(str), re.FindString(str))
 }

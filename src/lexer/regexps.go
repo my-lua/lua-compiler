@@ -55,3 +55,16 @@ var _reIdentifier = regexp.MustCompile(`^[_a-zA-Z][_a-zA-Z\d]*`)
 func (me *LuaLexer) ReIdentifier() *regexp.Regexp {
 	return _reIdentifier
 }
+
+// var _reShortStr = regexp.MustCompile(`
+// 	(?s)
+// 	(^'(\\\\|\\'|\\\n|\\z\s*|[^'\n])*') |
+// 	(^"(\\\\|\\"|\\\n|\\z\s*|[^"\n])*")
+// `)
+
+var _reShortStr = regexp.MustCompile(`^('.*?')|(".*?")`)
+
+// ReShortStr 短字符串（目前简单写的有错误）
+func (me *LuaLexer) ReShortStr() *regexp.Regexp {
+	return _reShortStr
+}

@@ -91,3 +91,8 @@ func (me *LuaLexer) chunkTopLikeIdentifier() bool {
 func (me *LuaLexer) chunkTopLikeNumber() bool {
 	return me.ReNumberStart().MatchString(me.chunk)
 }
+
+// chunkTopLikeLongString chunk顶部是否像一个长字符串
+func (me *LuaLexer) chunkTopLikeLongString() bool {
+	return me.ReLongStringBracketStart().MatchString(me.chunk)
+}

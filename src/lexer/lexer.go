@@ -29,14 +29,6 @@ func (me *LuaLexer) CurColumn() int {
 	return me.chunk.CurColumn()
 }
 
-func isWhiteSpace(c byte) bool {
-	switch c {
-	case '\t', '\n', '\v', '\f', '\r', ' ':
-		return true
-	}
-	return false
-}
-
 // Reset 重置状态机
 func (me *LuaLexer) Reset() {
 	me.chunk = NewChunk(me.source)

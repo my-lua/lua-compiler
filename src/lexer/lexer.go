@@ -6,9 +6,7 @@ import "fmt"
 type LuaLexer struct {
 	source     string
 	sourceName string
-	chunk      string
-	curLine    int
-	curColumn  int
+	chunk      *Chunk
 }
 
 // Source 源代码
@@ -23,12 +21,12 @@ func (me *LuaLexer) SourceName() string {
 
 // CurLine 当前词法解析的行号
 func (me *LuaLexer) CurLine() int {
-	return me.curLine
+	return me.chunk.CurLine()
 }
 
 // CurColumn 当前词法解析的列号
 func (me *LuaLexer) CurColumn() int {
-	return me.curColumn
+	return me.chunk.CurColumn()
 }
 
 func isWhiteSpace(c byte) bool {
@@ -41,9 +39,7 @@ func isWhiteSpace(c byte) bool {
 
 // Reset 重置状态机
 func (me *LuaLexer) Reset() {
-	me.chunk = me.source
-	me.curLine = 1
-	me.curColumn = 1
+	me.chunk = NewChunk(me.source)
 }
 
 // Run 运行状态机
@@ -65,10 +61,10 @@ func (me *LuaLexer) PrintStatus() {
 	fmt.Printf("file: %s\n", me.SourceName())
 	fmt.Printf("line: %d\n", me.CurLine())
 	fmt.Printf("column: %d\n", me.CurColumn())
-	if len(me.chunk) < 10 {
-		fmt.Printf("chunk: %s...\n", me.chunk[:len(me.chunk)])
+	if len(me.chunk.Text()) < 10 {
+		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:len(me.chunk.Text())])
 	} else {
-		fmt.Printf("chunk: %s...\n", me.chunk[:10])
+		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:10])
 	}
 }
 
@@ -77,8 +73,6 @@ func NewLexer(source, sourceName string) *LuaLexer {
 	return &LuaLexer{
 		source:     source,
 		sourceName: sourceName,
-		chunk:      source,
-		curLine:    1,
-		curColumn:  1,
+		chunk:      NewChunk(source),
 	}
 }

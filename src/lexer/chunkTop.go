@@ -8,10 +8,6 @@ import (
 // ChunkTop Chunk头部
 type ChunkTop string
 
-func (me ChunkTop) startsWith(text string) bool {
-	return strings.HasPrefix(string(me), text)
-}
-
 func (me ChunkTop) like(re *regexp.Regexp) bool {
 	return re.MatchString(string(me))
 }
@@ -39,9 +35,14 @@ func (me ChunkTop) IsNewLine() bool {
 	return false
 }
 
+// StartsWith 检查chunk顶部是否以某给定字符串开头
+func (me ChunkTop) StartsWith(text string) bool {
+	return strings.HasPrefix(string(me), text)
+}
+
 // IsPairOfNewLine 检查chunk顶部是否是可产生新行的成对符号
 func (me ChunkTop) IsPairOfNewLine() bool {
-	return me.startsWith("\r\n") || me.startsWith("\n\r")
+	return me.StartsWith("\r\n") || me.StartsWith("\n\r")
 }
 
 // LikeNumber 像是数字
@@ -51,7 +52,7 @@ func (me ChunkTop) LikeNumber() bool {
 
 // LikeShortString 像是短字符串
 func (me ChunkTop) LikeShortString() bool {
-	return me.startsWith("'") || me.startsWith("\"")
+	return me.StartsWith("'") || me.StartsWith("\"")
 }
 
 // LikeLongString 像是长字符串
@@ -61,7 +62,7 @@ func (me ChunkTop) LikeLongString() bool {
 
 // LikeComment 像是注释
 func (me ChunkTop) LikeComment() bool {
-	return me.startsWith("--")
+	return me.StartsWith("--")
 }
 
 // LikeIdentifier 像是标识符

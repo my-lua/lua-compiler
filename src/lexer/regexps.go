@@ -52,7 +52,7 @@ func ReNumber() *regexp.Regexp {
 var _reIdentifier = regexp.MustCompile(`^[_a-zA-Z][_a-zA-Z\d]*`)
 
 // ReIdentifier s
-func (me *LuaLexer) ReIdentifier() *regexp.Regexp {
+func ReIdentifier() *regexp.Regexp {
 	return _reIdentifier
 }
 
@@ -65,6 +65,6 @@ func (me *LuaLexer) ReIdentifier() *regexp.Regexp {
 var _reShortStr = regexp.MustCompile(`^('.*?')|(".*?")`)
 
 // ReShortStr 短字符串（目前简单写的有错误）
-func (me *LuaLexer) ReShortStr() *regexp.Regexp {
+func ReShortStr() *regexp.Regexp {
 	return _reShortStr
 }

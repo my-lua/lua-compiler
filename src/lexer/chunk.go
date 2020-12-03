@@ -35,7 +35,7 @@ func (me *Chunk) IsEmpty() bool {
 // Next 下移处理一个字符
 func (me *Chunk) Next() string {
 	top := me.Top().Char()
-	me.text = string(([]rune(me.text))[1:])
+	me.text = me.text[1:]
 	return top
 }
 

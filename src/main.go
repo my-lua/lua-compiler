@@ -22,4 +22,7 @@ func main() {
 	re := regexp.MustCompile(`^('.*?')|(".*?")`)
 	str := `"123"4" +  "sdf"`
 	fmt.Println(re.MatchString(str), re.FindString(str))
+
+	s := "abcd"
+	fmt.Println(string([]rune(s)[2:]))
 }

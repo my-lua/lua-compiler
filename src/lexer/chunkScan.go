@@ -2,7 +2,6 @@ package lexer
 
 import (
 	"regexp"
-	"strings"
 )
 
 // scan 扫描的基础方法
@@ -33,25 +32,25 @@ func (me *Chunk) ScanShortString() string {
 
 // collectLongString 采集长字符串
 func (me *Chunk) collectLongString(n int) string {
-	rst := ""
+	rst := []byte{}
 	for i := 0; i < n; i++ {
 		if me.Top().IsPairOfNewLine() {
 			me.NextN(2)
 			me.NewLine()
-			rst += "\n"
+			rst = append(rst, '\n')
 		} else if me.Top().IsNewLine() {
 			me.Next()
 			me.NewLine()
-			rst += "\n"
+			rst = append(rst, '\n')
 		} else {
-			rst += me.Next()
+			rst = append(rst, me.Next())
 		}
 	}
-	// 如果行首为换行符，则删除
-	if strings.HasPrefix(rst, "\n") {
+	// 如果头部为换行符，则删除
+	if len(rst) > 0 && rst[0] == '\n' {
 		rst = rst[1:]
 	}
-	return rst
+	return string(rst)
 }
 
 // ScanLongString 扫描长字符串

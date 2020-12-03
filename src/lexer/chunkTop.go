@@ -12,14 +12,19 @@ func (me ChunkTop) like(re *regexp.Regexp) bool {
 	return re.MatchString(string(me))
 }
 
-// Char 顶部字符（字符串形式）
-func (me ChunkTop) Char() string {
-	return string(me[0])
+// Char 顶部字符
+func (me ChunkTop) Char() byte {
+	return me[0]
+}
+
+// CharStr 顶部字符（字符串形式）
+func (me ChunkTop) CharStr() string {
+	return string(me.Char())
 }
 
 // IsWhiteSpace 检查chunk顶部是否是空白字符
 func (me ChunkTop) IsWhiteSpace() bool {
-	switch me.Char() {
+	switch me.CharStr() {
 	case "\t", "\n", "\v", "\f", "\r", " ":
 		return true
 	}
@@ -28,7 +33,7 @@ func (me ChunkTop) IsWhiteSpace() bool {
 
 // IsNewLine 检查chunk顶部是否是可产生新行的符号
 func (me ChunkTop) IsNewLine() bool {
-	switch me.Char() {
+	switch me.CharStr() {
 	case "\n", "\r":
 		return true
 	}

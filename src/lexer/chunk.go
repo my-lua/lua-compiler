@@ -33,17 +33,17 @@ func (me *Chunk) IsEmpty() bool {
 }
 
 // Next 下移处理一个字符
-func (me *Chunk) Next() string {
+func (me *Chunk) Next() byte {
 	top := me.Top().Char()
 	me.text = me.text[1:]
 	return top
 }
 
 // NextN 下移处理n个字符
-func (me *Chunk) NextN(n int) string {
-	rst := ""
+func (me *Chunk) NextN(n int) []byte {
+	rst := []byte{}
 	for i := 0; i < n; i++ {
-		rst += me.Next()
+		rst = append(rst, me.Next())
 	}
 	return rst
 }

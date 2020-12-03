@@ -9,7 +9,7 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		return NewLuaToken(TokenEof, "")
 	}
 	// 获取顶部字符
-	topChar := me.chunk.Top().Char()
+	topChar := me.chunk.Top().CharStr()
 	switch topChar {
 	case ";":
 		me.chunk.Next()
@@ -133,6 +133,5 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		return NewLuaToken(TokenIdentifier, identifier)
 	}
 
-	str := me.chunk.Next()
-	return NewLuaToken(TokenIdentifier, str)
+	panic("无法解析的意外字符")
 }

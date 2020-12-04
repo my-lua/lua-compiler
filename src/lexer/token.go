@@ -22,32 +22,32 @@ func (me *LuaToken) Text() string {
 	return me.text
 }
 
-// LineStart s
+// LineStart 单词行开始
 func (me *LuaToken) LineStart() int {
 	return me.lineStart
 }
 
-// LineEnd s
+// LineEnd 单词行结束
 func (me *LuaToken) LineEnd() int {
 	return me.lineEnd
 }
 
-// CharStart s
+// CharStart 单词列开始
 func (me *LuaToken) CharStart() int {
 	return me.charStart
 }
 
-// CharEnd s
+// CharEnd 单词列结束
 func (me *LuaToken) CharEnd() int {
 	return me.charEnd
 }
 
-// Line s
+// Line 当前行（行开始）
 func (me *LuaToken) Line() int {
 	return me.LineStart()
 }
 
-// Char s
+// Char 当前列（列开始）
 func (me *LuaToken) Char() int {
 	return me.CharStart()
 }

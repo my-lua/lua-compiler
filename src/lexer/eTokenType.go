@@ -131,12 +131,12 @@ var _tokenTypeNameTable = []string{
 	"TokenString",
 }
 
-// getLuaTokenTypeNameTable s
+// getLuaTokenTypeNameTable 获取类型名列表
 func getLuaTokenTypeNameTable() []string {
 	return _tokenTypeNameTable
 }
 
-// Name 获取名称
+// Name 类型名称
 func (me ETokenType) Name() string {
 	return getLuaTokenTypeNameTable()[int(me)]
 }
@@ -166,7 +166,7 @@ var _keywordMap = map[string]ETokenType{
 	"while":    TokenKwWhile,
 }
 
-// getLuaKeywordMap s
+// getLuaKeywordMap 获取文本到关键字映射表
 func getLuaKeywordMap() map[string]ETokenType {
 	return _keywordMap
 }

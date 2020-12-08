@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
-	"regexp"
 
 	"./lexer"
 )
@@ -18,11 +16,4 @@ func main() {
 	lex := lexer.NewLexer(source, fileName)
 	lex.Reset()
 	lex.Run()
-
-	re := regexp.MustCompile(`^('.*?')|(".*?")`)
-	str := `"123"4" +  "sdf"`
-	fmt.Println(re.MatchString(str), re.FindString(str))
-
-	s := "abcd"
-	fmt.Println(string([]rune(s)[2:]))
 }

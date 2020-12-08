@@ -1,28 +1,7 @@
-
-print("helloworld,Lua")
-
--- this's my func
-function Add(a, b)
-  local sum = (a + b) * b
-  for i = 1, sum, 1 do
-    print(i)
-  end
-  if sum > 10 then
-    print("a")
-  else
-    print("b")
-  end
-  return sum
+print("你好世界")
+local a, b = 1, 2
+if a > b then
+  print("大于")
+else
+  print("小于")
 end
-
---[==[
-  haha
-  it's long comment
-]==]
---[[nihao]]
-print(Add(1, 3))
-
---[==[
-  ss
-]==]print([==[
-ssdf你好]==])

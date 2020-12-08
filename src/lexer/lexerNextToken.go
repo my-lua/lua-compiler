@@ -4,7 +4,7 @@ package lexer
 func (me *LuaLexer) NextToken() *LuaToken {
 	// 跳过无效代码
 	me.chunk.SkipInvalidCodes()
-	// 如果已经没有要解析的代码，则返回EOF
+	// 如果已经没有要解析的代码，则返回Eof
 	if me.chunk.IsEmpty() {
 		return NewLuaToken(TokenEof, "")
 	}
@@ -133,5 +133,5 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		return NewLuaToken(TokenIdentifier, identifier)
 	}
 
-	panic("无法解析的意外字符")
+	panic("LuaLexer NextToken: 无法解析的意外字符")
 }

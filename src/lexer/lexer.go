@@ -57,8 +57,8 @@ func NewLexer(source, sourceName string) *LuaLexer {
 	}
 }
 
-// PrintStatus 打印词法分析器当前状态
-func (me *LuaLexer) PrintStatus() {
+// Print 打印词法分析器当前状态
+func (me *LuaLexer) Print() {
 	fmt.Printf("file: %s\n", me.SourceName())
 	fmt.Printf("line: %d\n", me.CurLine())
 	fmt.Printf("column: %d\n", me.CurChar())

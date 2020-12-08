@@ -1,6 +1,6 @@
 package lexer
 
-// Chunk Chunk类型
+// Chunk 在这里被抽象封装成为一个待处理的文本序列，并且提供一系列的操作方法
 type Chunk struct {
 	text    string
 	curLine int
@@ -22,7 +22,7 @@ func (me *Chunk) CurChar() int {
 	return me.curChar
 }
 
-// Top Chunk头部
+// Top 待处理文本的头部，实际就是待处理的文本，绑定了一系列操作头部的方法
 func (me *Chunk) Top() ChunkTop {
 	return ChunkTop(me.text)
 }
@@ -32,14 +32,14 @@ func (me *Chunk) IsEmpty() bool {
 	return len(me.text) < 1
 }
 
-// Next 下移处理一个字符
+// Next 下移处理一个字符，返回当前字符
 func (me *Chunk) Next() byte {
 	top := me.Top().Char()
 	me.text = me.text[1:]
 	return top
 }
 
-// NextN 下移处理n个字符
+// NextN 下移处理n个字符，返回字符数组
 func (me *Chunk) NextN(n int) []byte {
 	rst := []byte{}
 	for i := 0; i < n; i++ {

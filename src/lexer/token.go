@@ -79,11 +79,9 @@ func (me *LuaToken) SetCharEnd(value int) {
 }
 
 // SetChar 设置单词所在的字符范围
-func (me LuaToken) SetChar(start, end int) {
+func (me *LuaToken) SetChar(start, end int) {
 	me.SetCharStart(start)
 	me.SetCharEnd(end)
-	fmt.Print("1: ")
-	fmt.Println(me.Char())
 }
 
 // NewLuaToken 构造函数
@@ -101,8 +99,6 @@ func NewLuaToken(
 func (me *LuaToken) Print() {
 	line1, line2 := me.Line()
 	char1, char2 := me.Char()
-	fmt.Print("2: ")
-	fmt.Println(me.Char())
 	fmt.Printf(
 		"%s\t%s\t%d %d\t%d %d\n",
 		me.Text(),

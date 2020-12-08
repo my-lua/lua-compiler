@@ -1,6 +1,6 @@
 package lexer
 
-// NextToken 解析下一个单词
+// NextToken 解析下一个单词并返回
 func (me *LuaLexer) NextToken() *LuaToken {
 	// 跳过无效代码
 	me.chunk.SkipInvalidCodes()
@@ -29,9 +29,10 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		case "[":
 			if me.chunk.Top().LikeLongString() {
 				token = NewLuaToken(TokenString, me.chunk.ScanLongString())
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenSepLBrack, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenSepLBrack, topChar)
 		case "]":
 			me.chunk.Next()
 			token = NewLuaToken(TokenSepRBrack, topChar)
@@ -72,23 +73,26 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			if me.chunk.Top().StartsWith("::") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenSepLabel, "::")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenSepColon, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenSepColon, topChar)
 		case "~":
 			if me.chunk.Top().StartsWith("~=") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpNe, "~=")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenOpWave, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenOpWave, topChar)
 		case "=":
 			if me.chunk.Top().StartsWith("==") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpEq, "==")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenOpAssign, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenOpAssign, topChar)
 		case "<":
 			if me.chunk.Top().StartsWith("<<") {
 				me.chunk.NextN(2)
@@ -96,9 +100,10 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			} else if me.chunk.Top().StartsWith("<=") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpLe, "<=")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenOpLt, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenOpLt, topChar)
 		case ">":
 			if me.chunk.Top().StartsWith(">>") {
 				me.chunk.NextN(2)
@@ -106,9 +111,10 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			} else if me.chunk.Top().StartsWith(">=") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpGe, ">=")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenOpGt, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenOpGt, topChar)
 		case ".":
 			if me.chunk.Top().StartsWith("...") {
 				me.chunk.NextN(3)
@@ -116,9 +122,10 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			} else if me.chunk.Top().StartsWith("..") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpConcat, "..")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenSepDot, topChar)
 			}
-			me.chunk.Next()
-			token = NewLuaToken(TokenSepDot, topChar)
 		case "'", "\"":
 			token = NewLuaToken(TokenString, me.chunk.ScanShortString())
 		default:

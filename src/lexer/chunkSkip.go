@@ -8,6 +8,7 @@ func (me *Chunk) SkipComment() {
 	if me.Top().LikeLongString() {
 		me.ScanLongString()
 	} else {
+		// 短注释换行结束
 		for !me.IsEmpty() && !me.Top().IsNewLine() {
 			me.Next()
 		}

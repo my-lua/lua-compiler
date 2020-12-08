@@ -127,7 +127,7 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			} else if me.chunk.Top().StartsWith("..") {
 				me.chunk.NextN(2)
 				token = NewLuaToken(TokenOpConcat, "..")
-			} else {
+			} else if !me.chunk.Top().LikeNumber() {
 				me.chunk.Next()
 				token = NewLuaToken(TokenSepDot, topChar)
 			}

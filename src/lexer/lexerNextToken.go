@@ -52,8 +52,13 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			me.chunk.Next()
 			token = NewLuaToken(TokenOpMul, topChar)
 		case "/":
-			me.chunk.Next()
-			token = NewLuaToken(TokenOpDiv, topChar)
+			if me.chunk.Top().StartsWith("//") {
+				me.chunk.NextN(2)
+				token = NewLuaToken(TokenOpIDiv, "//")
+			} else {
+				me.chunk.Next()
+				token = NewLuaToken(TokenOpDiv, topChar)
+			}
 		case "%":
 			me.chunk.Next()
 			token = NewLuaToken(TokenOpMod, topChar)

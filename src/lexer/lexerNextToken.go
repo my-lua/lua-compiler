@@ -5,6 +5,7 @@ func (me *LuaLexer) NextToken() *LuaToken {
 	// 跳过无效代码
 	me.chunk.SkipInvalidCodes()
 	var token *LuaToken
+	// 存储当前行位置，字符位置
 	startLine, startChar := me.CurLine(), me.CurChar()
 	// 如果已经没有要解析的代码，则返回Eof
 	if me.chunk.IsEmpty() {
@@ -120,23 +121,23 @@ func (me *LuaLexer) NextToken() *LuaToken {
 			token = NewLuaToken(TokenSepDot, topChar)
 		case "'", "\"":
 			token = NewLuaToken(TokenString, me.chunk.ScanShortString())
-		}
-
-		// 其他
-		if me.chunk.Top().LikeNumber() {
-			token = NewLuaToken(TokenNumber, me.chunk.ScanNumber())
-		}
-
-		if me.chunk.Top().LikeIdentifier() {
-			identifier := me.chunk.ScanIdentifier()
-			if IsLuaKeyword(identifier) {
-				token = NewLuaToken(NewLuaKeyword(identifier), identifier)
+		default:
+			// 其他逻辑
+			if me.chunk.Top().LikeNumber() {
+				token = NewLuaToken(TokenNumber, me.chunk.ScanNumber())
+			} else if me.chunk.Top().LikeIdentifier() {
+				identifier := me.chunk.ScanIdentifier()
+				if IsLuaKeyword(identifier) {
+					token = NewLuaToken(NewLuaKeyword(identifier), identifier)
+				} else {
+					token = NewLuaToken(TokenIdentifier, identifier)
+				}
+			} else {
+				panic("LuaLexer NextToken: 无法解析的意外字符")
 			}
-			token = NewLuaToken(TokenIdentifier, identifier)
 		}
-
-		// panic("LuaLexer NextToken: 无法解析的意外字符")
 	}
+	// 设置单词所处的行范围，字符范围
 	token.SetLine(startLine, me.CurLine())
 	token.SetChar(startChar, me.CurChar())
 	return token

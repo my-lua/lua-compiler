@@ -134,7 +134,7 @@ func (me *LuaLexer) NextToken() *LuaToken {
 		case "'", "\"":
 			token = NewLuaToken(TokenString, me.chunk.ScanShortString())
 		default:
-			// 其他逻辑
+			// 数字，标识符（含关键字）处理逻辑
 			if me.chunk.Top().LikeNumber() {
 				token = NewLuaToken(TokenNumber, me.chunk.ScanNumber())
 			} else if me.chunk.Top().LikeIdentifier() {

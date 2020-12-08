@@ -8,10 +8,6 @@ import (
 // ChunkTop Chunk头部
 type ChunkTop string
 
-func (me ChunkTop) like(re *regexp.Regexp) bool {
-	return re.MatchString(string(me))
-}
-
 // Char 顶部字符
 func (me ChunkTop) Char() byte {
 	return me[0]
@@ -20,6 +16,16 @@ func (me ChunkTop) Char() byte {
 // CharStr 顶部字符（字符串形式）
 func (me ChunkTop) CharStr() string {
 	return string(me.Char())
+}
+
+// Like 传入正则表达式，进行匹配判断
+func (me ChunkTop) Like(re *regexp.Regexp) bool {
+	return re.MatchString(string(me))
+}
+
+// StartsWith 检查chunk顶部是否以某给定字符串开头
+func (me ChunkTop) StartsWith(text string) bool {
+	return strings.HasPrefix(string(me), text)
 }
 
 // IsWhiteSpace 检查chunk顶部是否是空白字符
@@ -40,11 +46,6 @@ func (me ChunkTop) IsNewLine() bool {
 	return false
 }
 
-// StartsWith 检查chunk顶部是否以某给定字符串开头
-func (me ChunkTop) StartsWith(text string) bool {
-	return strings.HasPrefix(string(me), text)
-}
-
 // IsPairOfNewLine 检查chunk顶部是否是可产生新行的成对符号
 func (me ChunkTop) IsPairOfNewLine() bool {
 	return me.StartsWith("\r\n") || me.StartsWith("\n\r")
@@ -52,7 +53,7 @@ func (me ChunkTop) IsPairOfNewLine() bool {
 
 // LikeNumber 像是数字
 func (me ChunkTop) LikeNumber() bool {
-	return me.like(ReNumberStart())
+	return me.Like(ReNumberStart())
 }
 
 // LikeShortString 像是短字符串
@@ -62,15 +63,15 @@ func (me ChunkTop) LikeShortString() bool {
 
 // LikeLongString 像是长字符串
 func (me ChunkTop) LikeLongString() bool {
-	return me.like(ReLongStringBracketStart())
+	return me.Like(ReLongStringBracketStart())
+}
+
+// LikeIdentifier 像是标识符
+func (me ChunkTop) LikeIdentifier() bool {
+	return me.Like(ReIdentifierStart())
 }
 
 // LikeComment 像是注释
 func (me ChunkTop) LikeComment() bool {
 	return me.StartsWith("--")
-}
-
-// LikeIdentifier 像是标识符
-func (me ChunkTop) LikeIdentifier() bool {
-	return me.like(ReIdentifierStart())
 }

@@ -36,6 +36,7 @@ func (me *Chunk) IsEmpty() bool {
 func (me *Chunk) Next() byte {
 	top := me.Top().Char()
 	me.text = me.text[1:]
+	me.curChar++
 	return top
 }
 

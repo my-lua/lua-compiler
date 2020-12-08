@@ -24,9 +24,9 @@ func (me *LuaLexer) CurLine() int {
 	return me.chunk.CurLine()
 }
 
-// CurColumn 当前词法解析的列号
-func (me *LuaLexer) CurColumn() int {
-	return me.chunk.CurColumn()
+// CurChar 当前词法解析的列号
+func (me *LuaLexer) CurChar() int {
+	return me.chunk.CurChar()
 }
 
 // Reset 重置状态机
@@ -52,7 +52,7 @@ func (me *LuaLexer) Run() []*LuaToken {
 func (me *LuaLexer) PrintStatus() {
 	fmt.Printf("file: %s\n", me.SourceName())
 	fmt.Printf("line: %d\n", me.CurLine())
-	fmt.Printf("column: %d\n", me.CurColumn())
+	fmt.Printf("column: %d\n", me.CurChar())
 	if len(me.chunk.Text()) < 10 {
 		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:len(me.chunk.Text())])
 	} else {

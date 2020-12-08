@@ -2,9 +2,9 @@ package lexer
 
 // Chunk Chunk类型
 type Chunk struct {
-	text      string
-	curLine   int
-	curColumn int
+	text    string
+	curLine int
+	curChar int
 }
 
 // Text 当前待解析的文本
@@ -17,9 +17,9 @@ func (me *Chunk) CurLine() int {
 	return me.curLine
 }
 
-// CurColumn 当前列
-func (me *Chunk) CurColumn() int {
-	return me.curColumn
+// CurChar 当前列
+func (me *Chunk) CurChar() int {
+	return me.curChar
 }
 
 // Top Chunk头部
@@ -51,7 +51,7 @@ func (me *Chunk) NextN(n int) []byte {
 // NewLine 新的一行
 func (me *Chunk) NewLine() {
 	me.curLine++
-	me.curColumn = 1
+	me.curChar = 1
 }
 
 // NewLineN 新的n行
@@ -64,8 +64,8 @@ func (me *Chunk) NewLineN(n int) {
 // NewChunk 构造函数
 func NewChunk(text string) *Chunk {
 	return &Chunk{
-		text:      text,
-		curLine:   1,
-		curColumn: 1,
+		text:    text,
+		curLine: 1,
+		curChar: 1,
 	}
 }

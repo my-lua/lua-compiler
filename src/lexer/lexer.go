@@ -34,30 +34,18 @@ func (me *LuaLexer) Reset() {
 	me.chunk = NewChunk(me.source)
 }
 
-// Run 运行状态机
+// Run 运行状态机，返回单词列表
 func (me *LuaLexer) Run() []*LuaToken {
-	result := make([]*LuaToken, 0)
+	rst := make([]*LuaToken, 0)
 	for {
 		token := me.NextToken()
 		token.Print()
-		result = append(result, token)
+		rst = append(rst, token)
 		if token.TokenType() == TokenEof {
 			break
 		}
 	}
-	return result
-}
-
-// PrintStatus s
-func (me *LuaLexer) PrintStatus() {
-	fmt.Printf("file: %s\n", me.SourceName())
-	fmt.Printf("line: %d\n", me.CurLine())
-	fmt.Printf("column: %d\n", me.CurChar())
-	if len(me.chunk.Text()) < 10 {
-		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:len(me.chunk.Text())])
-	} else {
-		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:10])
-	}
+	return rst
 }
 
 // NewLexer 构造函数
@@ -66,5 +54,17 @@ func NewLexer(source, sourceName string) *LuaLexer {
 		source:     source,
 		sourceName: sourceName,
 		chunk:      NewChunk(source),
+	}
+}
+
+// PrintStatus 打印词法分析器当前状态
+func (me *LuaLexer) PrintStatus() {
+	fmt.Printf("file: %s\n", me.SourceName())
+	fmt.Printf("line: %d\n", me.CurLine())
+	fmt.Printf("column: %d\n", me.CurChar())
+	if len(me.chunk.Text()) < 10 {
+		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:len(me.chunk.Text())])
+	} else {
+		fmt.Printf("chunk: %s...\n", me.chunk.Text()[:10])
 	}
 }
